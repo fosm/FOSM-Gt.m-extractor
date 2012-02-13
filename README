@@ -1,0 +1,26 @@
+Version 0.0000001 Mon Feb 13
+
+This is my first running version of a C Program that accesses the fosm database.
+
+The program loops ovre the main index of the nodex relation that contains the tags.
+so the first key is the tag. There are more keys that are not used yet, they are :
+
+1. TagName 
+2. Value 
+3. QuadTreeIndex
+4. NodeID 
+
+Here is an example to query the database : 
+  GTM>zwr ^nodex("highway","service",*)
+output is :
+  ^nodex("highway","service","bacdbccbdabacad",1229063980)=""
+
+Now my simple program uses the $Order function 
+
+See the tags that I extracted so far here NodeX_TagKeys.txt 
+
+FOSM contains many data relations, see Readme.relations, the numbers are from my database copy and may be old.
+
+Thanks to 80n for his help and patience while I am learning this.
+
+mike
