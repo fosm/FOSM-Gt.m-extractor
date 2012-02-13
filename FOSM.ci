@@ -1,1 +1,4 @@
-nodexorder  :gtm_char_t* NODEXORDER^FOSM(IO:gtm_char_t*)
+nodexorder2  : gtm_char_t* NODEXORDER^FOSM(IO:gtm_char_t*)
+nodexorder  : gtm_char_t* NODEXORDER^FOSM(IO:gtm_char_t*)
+hello  : void HELLO^FOSM()
+
