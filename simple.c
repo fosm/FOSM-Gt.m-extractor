@@ -147,7 +147,7 @@ int 	gtmci_orderany2( gtm_char_t * tablename, gtm_char_t * firstparam)
   return 1;
 }
 
-int 	gtmci_orderany1( gtm_char_t * tablename)
+int 	gtmci_orderany1( gtm_char_t * tablename, int limitcount)
 {
   
   gtm_status_t status;
@@ -159,8 +159,11 @@ int 	gtmci_orderany1( gtm_char_t * tablename)
   memset (retval, 0, sizeof (retval));
   
   int loopstatus=1;
+
+  printf ("tablename:\"%s\",\n keys : {",tablename);
+
   while (loopstatus) {
-    status = gtm_ci ("ORDERANY1",&retval,tablename,hdrval2);
+  status = gtm_ci ("ORDERANY1",&retval,tablename,hdrval2);
     if (check_status (status) != 1) {
       printf("FOSM/nodex_children2 Internal error!\n");
       char  msgbuf[BUFLEN]; 
@@ -175,61 +178,31 @@ int 	gtmci_orderany1( gtm_char_t * tablename)
     if (strcmp(hdrval2, "")==0)  {
       loopstatus=0;;		
     } else {
-      printf ("Found Key in table '%s', newkey '%s'\n", tablename, hdrval2 );
+      printf ("\t \"%s\" : 1, \n", hdrval2 ); //json
     }    
+
+    if (limitcount >0){
+      if (limitcount==1) {
+	printf ("}\n" ); //json
+	return;   }
+      limitcount --;
+    }
+
   }
+
+  printf ("}\n" ); // json
 
   return 1;
 }
 
 
-/* int process_nodex () { */
-
-/*   gtm_status_t status; */
-/*   gtm_char_t hdrval [BUFLEN]; */
-/*   gtm_char_t retval [BUFLEN]; */
-
-/*   int nullcount=10; // count down null items */
-
-/*   memset (hdrval, 0, sizeof (hdrval)); */
-
-/*     status = gtm_ci ("nodexorder", retval, &hdrval); */
-/*     if (check_status (status) != 1) { */
-/*       printf("FOSM/nodexorder Internal error!\n"); */
-/*       //    continue; */
-/*     } */
-/*     printf ("Check '%s' \n", hdrval); */
-/*     process_value_lookup_children(hdrval); // first */
-
-/*     while (hdrval) */
-/*       { */
-/* 	status = gtm_ci ("nodexorder", &hdrval , &hdrval); */
-
-/* 	if (check_status (status) != 1) { */
-/* 	  printf("FOSM/nodexorder Internal error!\n"); */
-/* 	  return; */
-/* 	} */
-
-/* 	if (strcmp(hdrval, "")==0) */
-/* 	  { */
-/* 	    printf("hdrval is empty %s!",hdrval); */
-/* 	    return;		 */
-/* 	  } */
-/* 	printf ("Found Key '%s'\n",hdrval); */
-/* 	process_value_lookup_children(hdrval); */
-	
-/*       } */
-
-
-/*   return 1; */
-/* } */
 
 int test()
 {
   gtmci_orderany4( "nodex","addr:city","Berlin","baccbcadadbbbab");
   gtmci_orderany3( "nodex","addr:city","Berlin");
   gtmci_orderany2( "nodex","addr:city");
-  gtmci_orderany1( "nodex");  
+  gtmci_orderany1( "nodex",100);  
 }
 
 int main(int argc, char ** argv)
@@ -237,6 +210,12 @@ int main(int argc, char ** argv)
 
   setenv("GTMCI","/pine02/scripts/FOSM.ci",0);  // where to find the call in routine 
   setenv("gtmroutines","/pine02/scripts/o(/pine02/scripts /pine02/serenji /pine02/gtmx /pine02/gtm)",0); // where to find the FOSM.m routine
+  chdir("/pine02/data");
+  setenv("gtm_dist","/pine02/gtm",0);
+  int err=  gtm_init(); // init 
+  printf ("{ gtm_fosminvoke: {\n"); // start of the json
+  printf ("\tinit_returned:%d,\n",err); // json attr
+
   // setenv("gtmgbldir","/pine02/data/xapi_big.gld",0); // where is the database located? well this script looks for data relative, so needs to be run there $as well
   // t table
   // j first param
@@ -250,14 +229,18 @@ int main(int argc, char ** argv)
   for (i=0; i < 4;i++)    {
       args[i]="";
     }
-
+  int limitcount=0;
   char c;
-  while ((c = getopt (argc, argv, "t:jk:l:m:")) != -1)   {
+  while ((c = getopt (argc, argv, "t:jk:l:m:c:")) != -1)   {
     
     switch (c) {
     case 't' : 
       // table
       tablename = optarg;
+      break;
+    case 'c' : 
+      // limit  count to 
+      limitcount = atoi(optarg);
       break;
     case 'j' : 
       // param1
@@ -284,19 +267,20 @@ int main(int argc, char ** argv)
       break;     
     }
   }
-  printf ("argcount %d\n",argcount);
+  printf ("\targcount: %d,\n",argcount); //json attribute
   // now call the function
     switch (argcount) {
     case 1:
-        gtmci_orderany1(tablename );  
+      gtmci_orderany1(tablename , limitcount);  
       break;      
     }
 
-  int err=  gtm_init(); // init 
-  printf ("init returned %d\n",err);
 
-  
-  
   gtm_exit();
+  printf ("}}\n"); // json
+
+  // try and reset the terminal
+  //  system("stty sane"); 
+
   return 0;
 }

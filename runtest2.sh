@@ -15,8 +15,10 @@ PATH=$PATH:$zappy/scripts:$zappy/gtmx:$zappy/gtm
 gtm_repl_instance="fosm01";export gtm_repl_instance
 
 #~/perl5/bin/strace -s9999 -o/tmp/strace.txt -ff  ~/experiments/simpletest/simple  > /tmp/log.txt 2>&1
- ~/experiments/simpletest/simple  > /tmp/log.txt 2>&1
+ldd -v /home/h4ck3rm1k3/experiments/simpletest/simple
+/home/h4ck3rm1k3/experiments/simpletest/simple  
+#> /tmp/log.txt 2>&1
 popd
 stty sane > /dev/null 2>&1
 #reset
-cat /tmp/log.txt
+#cat /tmp/log.txt
