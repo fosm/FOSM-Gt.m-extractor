@@ -2,7 +2,7 @@ LD_LIBRARY_PATH=/iscsidata/pine02/gtm/
 
 test : simple 
 	#bash ./runtest.sh 
-	./simple
+	./simple -t nodex -j
 	stty sane
 
 simple : /pine02/scripts/FOSM.ci  /pine02/scripts/FOSM.m simple.c

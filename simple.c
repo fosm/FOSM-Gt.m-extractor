@@ -3,6 +3,7 @@
 #include "stdlib.h"        // setenv
 
 #include "stdio.h"        // setenv
+#include "unistd.h"
 #define BUFLEN 512
 
 // parts of code taken from http://fooboo.org/~tmr/public/mod_mgirpc/mod_mgirpc.c
@@ -223,22 +224,78 @@ int 	gtmci_orderany1( gtm_char_t * tablename)
 /*   return 1; */
 /* } */
 
+int test()
+{
+  gtmci_orderany4( "nodex","addr:city","Berlin","baccbcadadbbbab");
+  gtmci_orderany3( "nodex","addr:city","Berlin");
+  gtmci_orderany2( "nodex","addr:city");
+  gtmci_orderany1( "nodex");  
+}
 
-int main()
+int main(int argc, char ** argv)
 {
 
   setenv("GTMCI","/pine02/scripts/FOSM.ci",0);  // where to find the call in routine 
   setenv("gtmroutines","/pine02/scripts/o(/pine02/scripts /pine02/serenji /pine02/gtmx /pine02/gtm)",0); // where to find the FOSM.m routine
   // setenv("gtmgbldir","/pine02/data/xapi_big.gld",0); // where is the database located? well this script looks for data relative, so needs to be run there $as well
+  // t table
+  // j first param
+  // k second param
+  // l third param
+  // m fourth param
+  char * tablename=0;
+  int argcount = 0;
+  char * args[4];
+  int i;
+  for (i=0; i < 4;i++)    {
+      args[i]="";
+    }
 
+  char c;
+  while ((c = getopt (argc, argv, "t:jk:l:m:")) != -1)   {
+    
+    switch (c) {
+    case 't' : 
+      // table
+      tablename = optarg;
+      break;
+    case 'j' : 
+      // param1
+      args[0]=optarg;
+      if (argcount < 1) argcount=1;
+      break;
 
+    case 'k' : 
+      // param2
+      args[1]=optarg;
+      if (argcount < 2)     argcount=2;
+      break;
+
+    case 'l' : 
+      // param2
+      args[2]=optarg;
+      if (argcount < 3) argcount=3;
+      break;
+
+    case 'm' : 
+      // param2
+      args[3]=optarg;
+      if (argcount < 4) argcount=4;
+      break;     
+    }
+  }
+  printf ("argcount %d\n",argcount);
+  // now call the function
+    switch (argcount) {
+    case 1:
+        gtmci_orderany1(tablename );  
+      break;      
+    }
 
   int err=  gtm_init(); // init 
   printf ("init returned %d\n",err);
-  gtmci_orderany4( "nodex","addr:city","Berlin","baccbcadadbbbab");
-  gtmci_orderany3( "nodex","addr:city","Berlin");
-  gtmci_orderany2( "nodex","addr:city");
-  gtmci_orderany1( "nodex");
+
+  
   
   gtm_exit();
   return 0;
