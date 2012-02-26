@@ -25,14 +25,33 @@ function look_at_tables() {
 
 }
 
+//gtm_fosminvoke: { init_returned:0, argcount: 1, tablename:"changeset", keys : { "1" : 1, "8701754" : 1, "8701971" : 1, "8702046" : 1, "8702267" : 1, "8702317" : 1, "8702351" : 1, "8702442" : 1, "8702554" : 1, "8702625" : 1, } }} );]
+function gtm_fosminvoke(output) {
+    var tbl=output.gtm_fosminvoke.tablename;
+    $("#stdout").append("<p>tablename " + tbl);
+       $("#stdout").append("<ul id=\"tbl_\"" + tbl + ">");
+    var keys=output.gtm_fosminvoke.keys;
+    for (k in keys) {
+	//var v= keys[k];
+	var id=tbl + "_" + k;
+	$("#stdout").append("<li id=\"" + id+ "\"> " +k + "</li>");
+    }
+    $("#stdout").append("</ul>");
+}
+
 function table_data(tablename,count,output) {
 
     $("#stdout").append("<p>tablename " + tablename);
     $("#stdout").append("<p>count " + count);
     $("#stdout").append("<p>output " + output);
-
+    gtm_fosminvoke(output);
 }
 
+function eval_output_table_data(data) {
+    
+    $("#stdout").append("<p>going to eval " + data);
+     jQuery.globalEval(data);
+}
 function load_dbjavascript(url) {
 
     $("#stdout").append("<p>loading " + url);
@@ -41,7 +60,7 @@ function load_dbjavascript(url) {
 	url: url,
 //	data: data,
 	success: function (data) {
-	    $("#stdout").append("<p>output " + data);
+	    $("#stdout").append("<p>output " + eval_output_table_data(data));
 		},
 //	dataType: dataType
     });

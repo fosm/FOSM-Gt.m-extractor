@@ -57,6 +57,26 @@ get '/tables/listk1/:datfile/:rowcount' => sub {
     basicpage ($output);
 };
 
+sub rungtm
+{
+    my $args=shift;
+# now setup the paths :
+    $ENV{gtmgbldir}="/pine02/data/xapi.gld";
+    $ENV{GTMCI}="/pine02/scripts/FOSM.ci";
+    $ENV{LD_LIBRARY_PATH}='/iscsidata/pine02/gtm/';
+    return  runprogram("/home/h4ck3rm1k3/experiments/simpletest/simple" . $args);    
+}
+
+get '/tables/listk2db/:datfile/:key1/:rowcount' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $firstkey = params->{key1};
+    my $output=rungtm("-t$tablename -c$count -k$firstkey");
+    #warn $output;    
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
 get '/tables/listk1db/:datfile/:rowcount' => sub {
 
     my $count = params->{rowcount};
@@ -68,7 +88,7 @@ get '/tables/listk1db/:datfile/:rowcount' => sub {
     $ENV{LD_LIBRARY_PATH}='/iscsidata/pine02/gtm/';
     $output=  runprogram("/home/h4ck3rm1k3/experiments/simpletest/simple -t$tablename -c$count -j");
     #warn $output;
-    "table_data(\"$tablename\",\"$count\",\"$output\");";
+    "table_data(\"$tablename\",\"$count\",$output);";
 };
 
 get '/' => sub {
