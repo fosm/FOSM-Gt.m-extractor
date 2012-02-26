@@ -355,14 +355,15 @@ int main(int argc, char ** argv)
   // m fourth param
   char * tablename=0;
   int argcount = 0;
-  char * args[4];
+  char * args[5];
   int i;
   for (i=0; i < 4;i++)    {
       args[i]="";
     }
   int limitcount=0;
+  int value=0;
   char c;
-  while ((c = getopt (argc, argv, "t:jk:l:m:c:")) != -1)   {
+  while ((c = getopt (argc, argv, "t:jk:l:m:n:c:v")) != -1)   {
     
     switch (c) {
     case 't' : 
@@ -392,6 +393,18 @@ int main(int argc, char ** argv)
       args[2]=optarg;
       if (argcount < 4) argcount=4;
       break;     
+
+    case 'n' : 
+      // param2
+      args[3]=optarg;
+      if (argcount < 4) argcount=5;
+      break;     
+
+    case 'v' : 
+      // get the value. does not call order
+      value=1;
+      break;     
+
     }
   }
   printf ("\targcount: %d,\n",argcount); //json attribute
@@ -414,7 +427,14 @@ int main(int argc, char ** argv)
       break;      
 
     case 4:
-      gtmci_any_4("ORDERANY4", tablename, limitcount, args[0],args[1],args[2],args[3]);
+      if (value)
+	{
+	  gtmci_any_4("VALUEANY4", tablename, 1, args[0],args[1],args[2],args[3]);
+	}
+      else
+	{
+	  gtmci_any_4("ORDERANY4", tablename, limitcount, args[0],args[1],args[2],args[3]);
+	}
       break;      
     
 

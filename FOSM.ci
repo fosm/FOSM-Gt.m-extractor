@@ -5,5 +5,6 @@ ORDERANY1 : gtm_char_t* ORDERANY1^FOSM(I:gtm_char_t*,I:gtm_char_t*)
 ORDERANY2 : gtm_char_t* ORDERANY2^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
 ORDERANY3 : gtm_char_t* ORDERANY3^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
 ORDERANY4 : gtm_char_t* ORDERANY4^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY4 : gtm_char_t* VALUEANY4^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
 
 

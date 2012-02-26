@@ -40,3 +40,8 @@ ORDERANY4(TABLENAME,K,K2,K3,K4) ;
 	  q $O(@globalname@(K,K2,K3,K4));
 
 
+VALUEANY4(TABLENAME,K,K2,K3,K4) ;
+        s globalname="^"_TABLENAME
+	  q @globalname@(K,K2,K3,K4);
+
+
