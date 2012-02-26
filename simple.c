@@ -147,6 +147,137 @@ int 	gtmci_orderany2( gtm_char_t * tablename, gtm_char_t * firstparam)
   return 1;
 }
 
+int 	gtmci_any_2(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2 )
+{
+  char * argv[] = { argv1, argv2 };
+  printf ("argv%d:\"%s\" %s,\n ",0,argv[0],argv1);
+  printf ("argv%d:\"%s\" %s,\n ",1,argv[1],argv2);
+  return gtmci_any(routine, tablename, limitcount, 2, argv );
+}
+
+int 	gtmci_any_3(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2, char * argv3 )
+{
+  char * argv[] = { argv1, argv2, argv3 };
+  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
+  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
+  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
+  return gtmci_any(routine, tablename, limitcount, 3, argv );
+}
+
+int 	gtmci_any_4(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2, char * argv3 , char * argv4)
+{
+  char * argv[] = { argv1, argv2, argv3, argv4 };
+  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
+  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
+  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
+  printf ("argv%d:\"%s\" 2argv4 %s,\n ",3,argv[3],argv4);
+  return gtmci_any(routine, tablename, limitcount, 4, argv );
+}
+
+int 	gtmci_any_1(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1 )
+{
+  char * argv[] = { argv1};
+  return gtmci_any(routine, tablename, limitcount, 1, argv );
+}
+
+// 
+
+// the last it
+int 	gtmci_any(const char * routine, gtm_char_t * tablename, int limitcount, int argc, char ** argv )
+{
+  
+  gtm_status_t status;
+
+  //  gtm_char_t hdrval [4][BUFLEN]; // the reset parameter, tag value
+  //  strcpy (hdrval2, "");
+  
+  gtm_char_t retval [BUFLEN]; // the return value
+  memset (retval, 0, sizeof (retval));
+  
+  gtm_char_t value[4] [BUFLEN]; // the return value
+  memset (value[0], 0, sizeof (retval));
+
+  int loopstatus=1;
+  printf ("routine:\"%s\",\n ",routine);
+
+  if (argc < 1)
+    {
+        printf ("error needs arguments\n ");
+      return ;
+    }
+  printf ("lastarg:\"%d\",\n ",argc-1);
+  printf ("argc:\"%d\",\n ",argc);
+  int i;
+  for (i =0; i < argc; i++) {
+    strcpy(value[i],argv[i]); // we want to pass our own value int
+    printf ("argv%d:\"%s\",\n ",i,argv[i]);
+
+  } 
+
+  printf ("tablename:\"%s\",\n keys : {",tablename);
+
+  while (loopstatus) {
+    
+    switch(argc){
+
+      // no with 0
+    case 1 :
+      status = gtm_ci (routine,&retval,tablename, value[0]);
+	break;
+    case 2 :
+      printf ("value%d:\"%s\",\n ",0,value[0]);
+      printf ("value%d:\"%s\",\n ",1,value[1]);
+      status = gtm_ci (routine,&retval,tablename, value[0],value[1]);
+      break;
+      
+	// case 3:
+    case 3 :
+      printf ("value%d:\"%s\",\n ",0,value[0]);
+      printf ("value%d:\"%s\",\n ",1,value[1]);
+      printf ("value%d:\"%s\",\n ",1,value[2]);
+      status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2]);
+      break;
+
+	// case 4
+    case 4 :
+      printf ("value%d:\"%s\",\n ",0,value[0]);
+      printf ("value%d:\"%s\",\n ",1,value[1]);
+      printf ("value%d:\"%s\",\n ",1,value[2]);
+      printf ("value%d:\"%s\",\n ",3,value[3]);
+      status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2],value[3]);
+      break;
+
+    };
+
+    if (check_status (status) != 1) {
+      printf("FOSM/gtm_ci Internal error!\n");
+      char  msgbuf[BUFLEN]; 
+      gtm_zstatus(msgbuf, BUFLEN); 
+      fprintf(stderr, "%s\n",msgbuf); 
+      loopstatus=0;
+    }
+    else {
+      strcpy(value[argc-1],retval);
+    }
+    if (strcmp(value[argc-1], "")==0)  {
+      loopstatus=0;;		
+	} else {
+	  printf ("\t \"%s\" : 1, \n", value[argc-1] ); //json
+	}    
+	if (limitcount >0){
+	  if (limitcount==1) {
+	    printf ("}\n" ); //json
+	    return;   }
+	  limitcount --;
+	}
+  }
+
+  printf ("}\n" ); // json
+
+  return 1;
+}
+
+
 int 	gtmci_orderany1( gtm_char_t * tablename, int limitcount)
 {
   
@@ -243,37 +374,52 @@ int main(int argc, char ** argv)
       limitcount = atoi(optarg);
       break;
     case 'j' : 
-      // param1
-      args[0]=optarg;
       if (argcount < 1) argcount=1;
       break;
 
-    case 'k' : 
-      // param2
-      args[1]=optarg;
+    case 'k' :    // param2
+      args[0]=optarg;
       if (argcount < 2)     argcount=2;
       break;
 
-    case 'l' : 
-      // param2
-      args[2]=optarg;
+    case 'l' :  // param 3
+      args[1]=optarg;
       if (argcount < 3) argcount=3;
       break;
 
     case 'm' : 
       // param2
-      args[3]=optarg;
+      args[2]=optarg;
       if (argcount < 4) argcount=4;
       break;     
     }
   }
   printf ("\targcount: %d,\n",argcount); //json attribute
+  for (i=0; i < 4;i++)    {
+    printf ("iargv%d:\"%s\",\n ",i,args[i]);
+    }
+
   // now call the function
     switch (argcount) {
     case 1:
       gtmci_orderany1(tablename , limitcount);  
       break;      
+    case 2:
+      //gtmci_orderany2(tablename , args[0], limitcount);  
+      gtmci_any_2("ORDERANY2", tablename, limitcount, args[0],args[1]);
+      break;      
+
+    case 3:
+      gtmci_any_3("ORDERANY3", tablename, limitcount, args[0],args[1],args[2]);
+      break;      
+
+    case 4:
+      gtmci_any_4("ORDERANY4", tablename, limitcount, args[0],args[1],args[2],args[3]);
+      break;      
+    
+
     }
+
 
 
   gtm_exit();
