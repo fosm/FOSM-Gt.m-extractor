@@ -1,8 +1,9 @@
 LD_LIBRARY_PATH=/iscsidata/pine02/gtm/
 
 test : simple 
-	bash ./runtest.sh 
-
+	#bash ./runtest.sh 
+	./simple
+	stty sane
 
 simple : /pine02/scripts/FOSM.ci  /pine02/scripts/FOSM.m simple.c
 	gcc -save-temps  -I/pine02/gtm  -O0 -g -L/usr/local/lib -fstack-protector  -L/pine02/gtm -lgtmshr simple.c -o simple

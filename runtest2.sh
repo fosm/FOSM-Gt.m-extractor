@@ -14,7 +14,9 @@ dse="$gtm_dist/dse"; export dse
 PATH=$PATH:$zappy/scripts:$zappy/gtmx:$zappy/gtm
 gtm_repl_instance="fosm01";export gtm_repl_instance
 
-~/perl5/bin/strace -s9999 -o/tmp/strace.txt -ff  ~/experiments/simpletest/simple  > /tmp/log.txt 2>&1
+#~/perl5/bin/strace -s9999 -o/tmp/strace.txt -ff  ~/experiments/simpletest/simple  > /tmp/log.txt 2>&1
+ ~/experiments/simpletest/simple  > /tmp/log.txt 2>&1
 popd
-reset
+stty sane > /dev/null 2>&1
+#reset
 cat /tmp/log.txt

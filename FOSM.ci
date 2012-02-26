@@ -1,4 +1,9 @@
-nodexorder2  : gtm_char_t* NODEXORDER^FOSM(IO:gtm_char_t*)
-nodexorder  : gtm_char_t* NODEXORDER^FOSM(IO:gtm_char_t*)
+nodexorder2  : gtm_char_t* NODEXORDER2^FOSM(I:gtm_char_t*,IO:gtm_char_t*)
+nodexorder   : gtm_char_t* NODEXORDER^FOSM(I:gtm_char_t*)
 hello  : void HELLO^FOSM()
+ORDERANY1 : gtm_char_t* ORDERANY1^FOSM(I:gtm_char_t*,I:gtm_char_t*)
+ORDERANY2 : gtm_char_t* ORDERANY2^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+ORDERANY3 : gtm_char_t* ORDERANY3^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+ORDERANY4 : gtm_char_t* ORDERANY4^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+
 

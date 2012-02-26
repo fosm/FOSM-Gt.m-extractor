@@ -16,5 +16,6 @@ gtm_repl_instance="fosm01";export gtm_repl_instance
 
  ~/experiments/simpletest/simple  > /tmp/log.txt 2>&1
 popd
-reset
+#reset
+ stty sane
 cat /tmp/log.txt
