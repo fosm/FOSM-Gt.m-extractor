@@ -24,3 +24,37 @@ FOSM contains many data relations, see Readme.relations, the numbers are from my
 Thanks to 80n for his help and patience while I am learning this.
 
 mike
+
+----------------------------------------------------------------------------
+
+More Notes
+
+example data:
+^relation(4042,"seq",434,"role")=""
+^relation(4042,"seq",434,"type")="way"
+^relation(4042,"seq",435,"ref")=61326636
+
+
+Here are some example invocations :
+
+~/experiments/simpletest/simple -t element -j -c10; stty sane
+get the first ten level one keyss from the element table.
+
+
+on of the keys is :aacbdddbabdcaba
+
+~/experiments/simpletest/simple -t element -kaacbdddbabdcaba  -c10; stty sane
+
+# examples for long keys :
+~/experiments/simpletest/simple -t changeset -k 8701754 -l n -m 585056240 -n v -o 2  -c10 
+~/experiments/simpletest/simple -t changeset -k 8701754 -l n -m 585056240 -n v -o 2 -pa -c10 -v
+~/experiments/simpletest/simple -t changeset -k 8701754 -l n -m 585056240 -n v -o 2 -pu -q 101 -v  -c10 ; 
+
+dont forget this at the end :
+ stty sane
+
+commit 0113ef3b14bcde7268c4c6a1882ed2766ac6445f
+Author: James Michael DuPont <JamesMikeDuPont@gmail.com>
+Date:   Mon Feb 27 03:32:59 2012 -0800
+
+    adding more params
