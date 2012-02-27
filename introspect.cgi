@@ -64,8 +64,70 @@ sub rungtm
     $ENV{gtmgbldir}="/pine02/data/xapi.gld";
     $ENV{GTMCI}="/pine02/scripts/FOSM.ci";
     $ENV{LD_LIBRARY_PATH}='/iscsidata/pine02/gtm/';
-    return  runprogram("/home/h4ck3rm1k3/experiments/simpletest/simple" . $args);    
+    return  runprogram("/home/h4ck3rm1k3/experiments/simpletest/simple " . $args);    
 }
+
+get '/tables/listk3db/:datfile/:key1/:key2/:rowcount' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $firstkey = params->{key1};
+    my $secondkey = params->{key2};
+    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+get '/tables/listk4db/:datfile/:key1/:key2/:key3/:rowcount' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $firstkey = params->{key1};
+    my $secondkey = params->{key2};
+    my $thirdkey = params->{key3};
+    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey -m$thirdkey");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+get '/tables/listk5db/:datfile/:key1/:key2/:key3/:key4/:rowcount' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $firstkey = params->{key1};
+    my $secondkey = params->{key2};
+    my $thirdkey = params->{key3};
+    my $key4 = params->{key4};
+    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey -m$thirdkey  -n$key4");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+
+#http://pine02.fosm.org:5000/tables/value4db/relation/2284/seq/1/type
+get '/tables/value4db/:datfile/:key1/:key2/:key3/:key4' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $firstkey = params->{key1};
+    my $secondkey = params->{key2};
+    my $thirdkey = params->{key3};
+    my $key4 = params->{key4};
+    my $output=rungtm("-t$tablename -c1 -k$firstkey -l$secondkey -m$thirdkey  -n$key4 -v ");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+get '/tables/listk6db/:datfile/:key1/:key2/:key3/:key4/:key5/:rowcount' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $firstkey = params->{key1};
+    my $secondkey = params->{key2};
+    my $thirdkey = params->{key3};
+    my $key4 = params->{key4};
+    my $key5 = params->{key6};
+    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey -m$thirdkey  -n$key4 -o$key5");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+
 
 get '/tables/listk2db/:datfile/:key1/:rowcount' => sub {
 
@@ -74,7 +136,7 @@ get '/tables/listk2db/:datfile/:key1/:rowcount' => sub {
     my $firstkey = params->{key1};
     my $output=rungtm("-t$tablename -c$count -k$firstkey");
     #warn $output;    
-    "table_data(\"$tablename\",\"$count\",$output);";
+    "table_data_k1(\"$tablename\",\"$count\",\"$firstkey\",$output);";
 };
 
 get '/tables/listk1db/:datfile/:rowcount' => sub {

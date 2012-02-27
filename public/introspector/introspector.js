@@ -31,10 +31,21 @@ function gtm_fosminvoke(output) {
     $("#stdout").append("<p>tablename " + tbl);
        $("#stdout").append("<ul id=\"tbl_\"" + tbl + ">");
     var keys=output.gtm_fosminvoke.keys;
+    var idclean= 1;
+
     for (k in keys) {
 	//var v= keys[k];
-	var id=tbl + "_" + k;
-	$("#stdout").append("<li id=\"" + id+ "\"> " +k + "</li>");
+	var id=tbl + "_" + idclean;
+	idclean++;
+//	var text = "going to load the data for table " + tbl + "and key" + k + " with id " + id;
+//	var code= "alert(\\\"" + text + "\\\")";
+	$("#stdout").append("<li style=\"border:1px solid red; background-color:yellow;\" onclick=\"alert(1)\" id=\"" + id+ "\"> " +k + "</li>");
+	//var x = document.getElementById(id);
+	//alert (x);
+//	jQuery("#" + id).click(function(event) {
+
+//	    return false;
+//	})
     }
     $("#stdout").append("</ul>");
 }
@@ -52,6 +63,7 @@ function eval_output_table_data(data) {
     $("#stdout").append("<p>going to eval " + data);
      jQuery.globalEval(data);
 }
+
 function load_dbjavascript(url) {
 
     $("#stdout").append("<p>loading " + url);
