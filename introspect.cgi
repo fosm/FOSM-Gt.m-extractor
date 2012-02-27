@@ -49,11 +49,7 @@ get '/tables/listk1/:datfile/:rowcount' => sub {
     my $count = params->{rowcount};
     my $tablename = params->{datfile};
     my $output="";
-# now setup the paths :
-    $ENV{gtmgbldir}="/pine02/data/xapi.gld";
-    $ENV{GTMCI}="/pine02/scripts/FOSM.ci";
-    $ENV{LD_LIBRARY_PATH}='/iscsidata/pine02/gtm/';
-    $output=  "load_dbjavascript(\"http://pine02.fosm.org:5000/tables/listk1db/${tablename}/${count}\")";
+    $output=  "load_dbjavascript(\"/proxy/tables/listk1db/${tablename}/${count}\")";
     basicpage ($output);
 };
 
@@ -201,6 +197,31 @@ process_tablelist(list);
 
 };
 
+
+
+
+## proxy interface 
+use LWP::UserAgent;
+
+#use LWP::Simple qw
+get qr '/proxy/(.*)' => sub {
+    # proxy the request to some server
+    my $url = request->path ;
+    my $source = config->{gtm_data_source};
+    $url =~ s/(.+proxy)/$source/; # replace the proxy with the real server
+    warn "Going to get $url";
+    my $ua = new LWP::UserAgent;
+    my $req = new HTTP::Request 'GET' => $url;
+    # send request
+    my $res = $ua->request($req);
+
+    # check the outcome
+    if ($res->is_success) {
+	return $res->content;
+    } else {
+	print "Error: " . $res->status_line . "\n";
+    }    
+};
 
 #dance;
 
