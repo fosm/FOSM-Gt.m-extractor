@@ -71,9 +71,9 @@ get '/tables/listk3db/:datfile/:key1/:key2/:rowcount' => sub {
 
     my $count = params->{rowcount};
     my $tablename = params->{datfile};
-    my $firstkey = params->{key1};
-    my $secondkey = params->{key2};
-    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey");
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $output=rungtm("-t$tablename -c$count -k$key1 -l$key2");
     "table_data(\"$tablename\",\"$count\",$output);";
 };
 
@@ -81,10 +81,10 @@ get '/tables/listk4db/:datfile/:key1/:key2/:key3/:rowcount' => sub {
 
     my $count = params->{rowcount};
     my $tablename = params->{datfile};
-    my $firstkey = params->{key1};
-    my $secondkey = params->{key2};
-    my $thirdkey = params->{key3};
-    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey -m$thirdkey");
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
+    my $output=rungtm("-t$tablename -c$count -k$key1 -l$key2 -m$key3");
     "table_data(\"$tablename\",\"$count\",$output);";
 };
 
@@ -92,11 +92,11 @@ get '/tables/listk5db/:datfile/:key1/:key2/:key3/:key4/:rowcount' => sub {
 
     my $count = params->{rowcount};
     my $tablename = params->{datfile};
-    my $firstkey = params->{key1};
-    my $secondkey = params->{key2};
-    my $thirdkey = params->{key3};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
     my $key4 = params->{key4};
-    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey -m$thirdkey  -n$key4");
+    my $output=rungtm("-t$tablename -c$count -k$key1 -l$key2 -m$key3  -n$key4");
     "table_data(\"$tablename\",\"$count\",$output);";
 };
 
@@ -106,24 +106,93 @@ get '/tables/value4db/:datfile/:key1/:key2/:key3/:key4' => sub {
 
     my $count = params->{rowcount};
     my $tablename = params->{datfile};
-    my $firstkey = params->{key1};
-    my $secondkey = params->{key2};
-    my $thirdkey = params->{key3};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
     my $key4 = params->{key4};
-    my $output=rungtm("-t$tablename -c1 -k$firstkey -l$secondkey -m$thirdkey  -n$key4 -v ");
+    my $output=rungtm("-t$tablename -c1 -k$key1 -l$key2 -m$key3  -n$key4 -v ");
     "table_data(\"$tablename\",\"$count\",$output);";
 };
+
+get '/tables/value5db/:datfile/:key1/:key2/:key3/:key4/:key5' => sub {
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
+    my $key4 = params->{key4};
+    my $key5 = params->{key5};
+    my $output=rungtm("-t$tablename -c1 -k$key1 -l$key2 -m$key3  -n$key4 -o$key5 -v ");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+get '/tables/value6db/:datfile/:key1/:key2/:key3/:key4/:key5/:key6' => sub {
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
+    my $key4 = params->{key4};
+    my $key5 = params->{key5};
+    my $key6 = params->{key6};
+    my $output=rungtm("-t$tablename -c1 -k$key1 -l$key2 -m$key3  -n$key4 -o$key5 -p$key6 -v ");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+get '/tables/value7db/:datfile/:key1/:key2/:key3/:key4/:key5/:key6/:key7' => sub {
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
+    my $key4 = params->{key4};
+    my $key5 = params->{key5};
+    my $key6 = params->{key6};
+    my $key7 = params->{key7};
+    my $output=rungtm("-t$tablename -c1 -k$key1 -l$key2 -m$key3  -n$key4 -o$key5 -p$key6 -q$key7 -v ");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
 
 get '/tables/listk6db/:datfile/:key1/:key2/:key3/:key4/:key5/:rowcount' => sub {
 
     my $count = params->{rowcount};
     my $tablename = params->{datfile};
-    my $firstkey = params->{key1};
-    my $secondkey = params->{key2};
-    my $thirdkey = params->{key3};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
     my $key4 = params->{key4};
-    my $key5 = params->{key6};
-    my $output=rungtm("-t$tablename -c$count -k$firstkey -l$secondkey -m$thirdkey  -n$key4 -o$key5");
+    my $key5 = params->{key5};
+    my $output=rungtm("-t$tablename -c$count -k$key1 -l$key2 -m$key3  -n$key4 -o$key5");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+get '/tables/listk7db/:datfile/:key1/:key2/:key3/:key4/:key5/:key6/:rowcount' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
+    my $key4 = params->{key4};
+    my $key5 = params->{key5};
+    my $key6 = params->{key6};
+    my $output=rungtm("-t$tablename -c$count -k$key1 -l$key2 -m$key3  -n$key4 -o$key5  -p$key6");
+    "table_data(\"$tablename\",\"$count\",$output);";
+};
+
+get '/tables/listk8db/:datfile/:key1/:key2/:key3/:key4/:key5/:key6/:key7/:rowcount' => sub {
+
+    my $count = params->{rowcount};
+    my $tablename = params->{datfile};
+    my $key1 = params->{key1};
+    my $key2 = params->{key2};
+    my $key3 = params->{key3};
+    my $key4 = params->{key4};
+    my $key5 = params->{key5};
+    my $key6 = params->{key6};
+    my $key7 = params->{key7};
+    my $output=rungtm("-t$tablename -c$count -k$key1 -l$key2 -m$key3  -n$key4 -o$key5 -p$key6 -p$key7");
     "table_data(\"$tablename\",\"$count\",$output);";
 };
 
@@ -133,10 +202,10 @@ get '/tables/listk2db/:datfile/:key1/:rowcount' => sub {
 
     my $count = params->{rowcount};
     my $tablename = params->{datfile};
-    my $firstkey = params->{key1};
-    my $output=rungtm("-t$tablename -c$count -k$firstkey");
+    my $key1 = params->{key1};
+    my $output=rungtm("-t$tablename -c$count -k$key1");
     #warn $output;    
-    "table_data_k1(\"$tablename\",\"$count\",\"$firstkey\",$output);";
+    "table_data_k1(\"$tablename\",\"$count\",\"$key1\",$output);";
 };
 
 get '/tables/listk1db/:datfile/:rowcount' => sub {
