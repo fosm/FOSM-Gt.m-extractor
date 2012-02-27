@@ -236,12 +236,17 @@ sub listdir
     warn $dirname;
     my @dats = map { s/\.dat$//; $_ } grep { /\.dat$/ } readdir(D);
     closedir D;
-    #join ""
- #   $json->encode( \@dats );
-    warn join ",",@dats;
+#    warn join ",",@dats;
     to_json(\@dats);
 }
 
+#use Dancer ':syntax';
+#use Dancer::Plugin::Ajax;
+
+get '/tables/listjson' => sub {
+
+    listdir("/pine02/data/");
+};
 
 get '/tables/list' => sub {
 
@@ -257,10 +262,10 @@ list of tables, just the dat files! <div id="tables"></div>
 
   $(document).ready(function(){
    var list=
-]
-		    . 
-		    listdir("/pine02/data/") .
-q[
+		    ]	    . 
+		    listdir("/pine02/data/")
+		    .
+		    q[
 process_tablelist(list);
      }); // ready
   </script>
@@ -278,4 +283,5 @@ my $app = sub {
     my $request = Dancer::Request->new ( env => $env ) ;
     Dancer->dance($request);
 };
+
 Plack::Runner->run($app);
