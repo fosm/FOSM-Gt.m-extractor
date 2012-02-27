@@ -1,10 +1,30 @@
 nodexorder2  : gtm_char_t* NODEXORDER2^FOSM(I:gtm_char_t*,IO:gtm_char_t*)
 nodexorder   : gtm_char_t* NODEXORDER^FOSM(I:gtm_char_t*)
 hello  : void HELLO^FOSM()
+
 ORDERANY1 : gtm_char_t* ORDERANY1^FOSM(I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY1 : gtm_char_t* VALUEANY1^FOSM(I:gtm_char_t*,I:gtm_char_t*)
+
 ORDERANY2 : gtm_char_t* ORDERANY2^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY2 : gtm_char_t* VALUEANY2^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+
 ORDERANY3 : gtm_char_t* ORDERANY3^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY3 : gtm_char_t* VALUEANY3^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+
 ORDERANY4 : gtm_char_t* ORDERANY4^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
 VALUEANY4 : gtm_char_t* VALUEANY4^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+
+ORDERANY5 : gtm_char_t* ORDERANY5^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY5 : gtm_char_t* VALUEANY5^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+
+ORDERANY6 : gtm_char_t* ORDERANY6^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY6 : gtm_char_t* VALUEANY6^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+
+ORDERANY7 : gtm_char_t* ORDERANY7^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY7 : gtm_char_t* VALUEANY7^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+
+
+ORDERANY8 : gtm_char_t* ORDERANY8^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
+VALUEANY8 : gtm_char_t* VALUEANY8^FOSM(I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*,I:gtm_char_t*)
 
 

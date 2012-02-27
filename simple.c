@@ -5,6 +5,7 @@
 #include "stdio.h"        // setenv
 #include "unistd.h"
 #define BUFLEN 512
+#define MAXARGS 8
 
 // parts of code taken from http://fooboo.org/~tmr/public/mod_mgirpc/mod_mgirpc.c
 
@@ -37,174 +38,27 @@ int callin_void_void(const char * name)
 
 }
 
-int 	gtmci_orderany4( gtm_char_t * tablename, gtm_char_t * firstparam,gtm_char_t * secondparam,gtm_char_t * thirdparam) // add param
-{
-  
-  gtm_status_t status;
-  gtm_char_t hdrval2 [BUFLEN]; // the changing parameter, set from the return value
-  strcpy (hdrval2, ""); 
-  gtm_char_t retval [BUFLEN]; // the return value, passed to hdrval2
-  memset (retval, 0, sizeof (retval));
-    int loopstatus=1;
-  while (loopstatus) {
-    status = gtm_ci ("ORDERANY4",&retval,tablename,firstparam,secondparam,thirdparam,hdrval2 ); // the ci
-    if (check_status (status) != 1) {
-      printf("FOSM/ORDEANY3 Internal error!\n");
-      char  msgbuf[BUFLEN]; 
-      gtm_zstatus(msgbuf, BUFLEN); 
-      fprintf(stderr, "%s\n",msgbuf); 
-      loopstatus=0;
-    }
-    else {
-      strcpy(hdrval2,retval); // cp the return value
-    }
-
-    if (strcmp(hdrval2, "")==0)  {
-      loopstatus=0;;		
-    } else {
-      printf ("Found Key in table '%s', key1 '%s',key2 '%s',key3 '%s' newkey '%s'\n", tablename, firstparam, secondparam,thirdparam,hdrval2 );
-    }    
-  }
-  return 1;
-}
-
-int 	gtmci_orderany3( gtm_char_t * tablename, gtm_char_t * firstparam,gtm_char_t * secondparam) // add param
-{
-  
-  gtm_status_t status;
-
-  gtm_char_t hdrval2 [BUFLEN]; // the changing parameter, set from the return value
-  strcpy (hdrval2, "");
-  
-  gtm_char_t retval [BUFLEN]; // the return value, passed to hdrval2
-  memset (retval, 0, sizeof (retval));
-  
-  int loopstatus=1;
-  while (loopstatus) {
-    status = gtm_ci ("ORDERANY3",&retval,tablename,firstparam,secondparam,hdrval2 ); // the ci
-
-    if (check_status (status) != 1) {
-      printf("FOSM/ORDEANY Internal error!\n");
-      char  msgbuf[BUFLEN]; 
-      gtm_zstatus(msgbuf, BUFLEN); 
-      fprintf(stderr, "%s\n",msgbuf); 
-      loopstatus=0;
-    }
-    else {
-      strcpy(hdrval2,retval); // cp the return value
-    }
-
-    if (strcmp(hdrval2, "")==0)  {
-      loopstatus=0;;		
-    } else {
-      printf ("Found Key in table '%s', key1 '%s',key2 '%s' newkey '%s'\n", tablename, firstparam, secondparam, hdrval2 );
-    }    
-  }
-  return 1;
-}
-
-int 	gtmci_orderany2( gtm_char_t * tablename, gtm_char_t * firstparam)
-{
-  
-  gtm_status_t status;
-
-  gtm_char_t hdrval2 [BUFLEN]; // the second parameter, tag value
-  strcpy (hdrval2, "");
-  
-  gtm_char_t retval [BUFLEN]; // the return value
-  memset (retval, 0, sizeof (retval));
-  
-  int loopstatus=1;
-  while (loopstatus) {
-    //    printf("going to call\n");
-    status = gtm_ci ("ORDERANY2",&retval,tablename,firstparam,hdrval2 );
-
-    //        fprintf(stderr, "retval: %s\n",retval); 
-    //  fprintf(stderr, "status:%d\n",status); 
-
-    if (check_status (status) != 1) {
-      printf("FOSM/nodex_children2 Internal error!\n");
-      char  msgbuf[BUFLEN]; 
-      gtm_zstatus(msgbuf, BUFLEN); 
-      fprintf(stderr, "%s\n",msgbuf); 
-      loopstatus=0;
-      //    continue;
-    }
-    else {
-
-      strcpy(hdrval2,retval);
-    }
-
-    if (strcmp(hdrval2, "")==0)  {
-      //      printf("hdrval2 is empty %s!",hdrval2);
-      loopstatus=0;;		
-    } else {
-      //      printf ("Found Key '%s'\n",hdrval2);
-      printf ("Found Key in table '%s', key1 '%s' newkey '%s'\n", tablename, firstparam, hdrval2 );
-    }    
-  }
-
-  return 1;
-}
-
-int 	gtmci_any_2(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2 )
-{
-  char * argv[] = { argv1, argv2 };
-  //  printf ("argv%d:\"%s\" %s,\n ",0,argv[0],argv1);
-  //  printf ("argv%d:\"%s\" %s,\n ",1,argv[1],argv2);
-  return gtmci_any(routine, tablename, limitcount, 2, argv );
-}
-
-int 	gtmci_any_3(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2, char * argv3 )
-{
-  char * argv[] = { argv1, argv2, argv3 };
-  //  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
-  //  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
-  //  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
-  return gtmci_any(routine, tablename, limitcount, 3, argv );
-}
-
-int 	gtmci_any_4(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2, char * argv3 , char * argv4)
-{
-  char * argv[] = { argv1, argv2, argv3, argv4 };
-  //  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
-  //  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
-  //  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
-  //  printf ("argv%d:\"%s\" 2argv4 %s,\n ",3,argv[3],argv4);
-  return gtmci_any(routine, tablename, limitcount, 4, argv );
-}
-
-int 	gtmci_any_1(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1 )
-{
-  char * argv[] = { argv1};
-  return gtmci_any(routine, tablename, limitcount, 1, argv );
-}
-
-// 
-
-// the last it
+// a generic routine 
 int 	gtmci_any(const char * routine, gtm_char_t * tablename, int limitcount, int argc, char ** argv )
 {
-  
-  gtm_status_t status;
-
-  //  gtm_char_t hdrval [4][BUFLEN]; // the reset parameter, tag value
-  //  strcpy (hdrval2, "");
-  
-  gtm_char_t retval [BUFLEN]; // the return value
-  memset (retval, 0, sizeof (retval));
-  
-  gtm_char_t value[4] [BUFLEN]; // the return value
-  memset (value[0], 0, sizeof (retval));
-
-  int loopstatus=1;
-  printf ("routine:\"%s\",\n ",routine);
-
   if (argc < 1)
     {
         printf ("error needs arguments\n ");
       return ;
     }
+  
+  gtm_status_t status;
+
+ 
+  gtm_char_t retval [BUFLEN]; // the return value
+  memset (retval, 0, sizeof (retval));
+  
+  gtm_char_t value[MAXARGS] [BUFLEN]; // the parmeter values are all copied here
+  memset (value[0], 0, sizeof (retval));
+
+  int loopstatus=1;
+  printf ("routine:\"%s\",\n ",routine);
+
   printf ("lastarg:\"%d\",\n ",argc-1);
   printf ("argc:\"%d\",\n ",argc);
   int i;
@@ -213,40 +67,34 @@ int 	gtmci_any(const char * routine, gtm_char_t * tablename, int limitcount, int
     //printf ("argv%d:\"%s\",\n ",i,argv[i]);
 
   } 
-
   printf ("tablename:\"%s\",\n keys : {",tablename);
-
   while (loopstatus) {
     
     switch(argc){
-
-      // no with 0
     case 1 :
       status = gtm_ci (routine,&retval,tablename, value[0]);
 	break;
     case 2 :
-      // printf ("value%d:\"%s\",\n ",0,value[0]);
-      //printf ("value%d:\"%s\",\n ",1,value[1]);
       status = gtm_ci (routine,&retval,tablename, value[0],value[1]);
       break;
-      
-	// case 3:
     case 3 :
-      //printf ("value%d:\"%s\",\n ",0,value[0]);
-      // printf ("value%d:\"%s\",\n ",1,value[1]);
-      //printf ("value%d:\"%s\",\n ",1,value[2]);
       status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2]);
       break;
-
-	// case 4
     case 4 :
-      //      printf ("value%d:\"%s\",\n ",0,value[0]);
-      // printf ("value%d:\"%s\",\n ",1,value[1]);
-      // printf ("value%d:\"%s\",\n ",1,value[2]);
-      // printf ("value%d:\"%s\",\n ",3,value[3]);
       status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2],value[3]);
       break;
-
+    case 5 :
+      status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2],value[3], value[4]);
+      break;
+    case 6 :
+      status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2],value[3], value[4], value[5]);
+      break;
+    case 7 :
+      status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2],value[3], value[4], value[5],value[6]);
+      break;
+    case 8 :
+      status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2],value[3], value[4], value[5],value[6],value[7]);
+      break;
     };
 
     if (check_status (status) != 1) {
@@ -278,63 +126,6 @@ int 	gtmci_any(const char * routine, gtm_char_t * tablename, int limitcount, int
 }
 
 
-int 	gtmci_orderany1( gtm_char_t * tablename, int limitcount)
-{
-  
-  gtm_status_t status;
-
-  gtm_char_t hdrval2 [BUFLEN]; // the second parameter, tag value
-  strcpy (hdrval2, "");
-  
-  gtm_char_t retval [BUFLEN]; // the return value
-  memset (retval, 0, sizeof (retval));
-  
-  int loopstatus=1;
-
-  printf ("tablename:\"%s\",\n keys : {",tablename);
-
-  while (loopstatus) {
-  status = gtm_ci ("ORDERANY1",&retval,tablename,hdrval2);
-    if (check_status (status) != 1) {
-      printf("FOSM/nodex_children2 Internal error!\n");
-      char  msgbuf[BUFLEN]; 
-      gtm_zstatus(msgbuf, BUFLEN); 
-      fprintf(stderr, "%s\n",msgbuf); 
-      loopstatus=0;
-    }
-    else {
-      strcpy(hdrval2,retval);
-    }
-
-    if (strcmp(hdrval2, "")==0)  {
-      loopstatus=0;;		
-    } else {
-      printf ("\t \"%s\" : 1, \n", hdrval2 ); //json
-    }    
-
-    if (limitcount >0){
-      if (limitcount==1) {
-	printf ("}\n" ); //json
-	return;   }
-      limitcount --;
-    }
-
-  }
-
-  printf ("}\n" ); // json
-
-  return 1;
-}
-
-
-
-int test()
-{
-  gtmci_orderany4( "nodex","addr:city","Berlin","baccbcadadbbbab");
-  gtmci_orderany3( "nodex","addr:city","Berlin");
-  gtmci_orderany2( "nodex","addr:city");
-  gtmci_orderany1( "nodex",100);  
-}
 
 int main(int argc, char ** argv)
 {
@@ -355,15 +146,15 @@ int main(int argc, char ** argv)
   // m fourth param
   char * tablename=0;
   int argcount = 0;
-  char * args[5];
+  char * args[MAXARGS];
   int i;
-  for (i=0; i < 4;i++)    {
+  for (i=0; i < MAXARGS-1;i++)    {
       args[i]="";
     }
   int limitcount=0;
   int value=0;
   char c;
-  while ((c = getopt (argc, argv, "t:jk:l:m:n:c:v")) != -1)   {
+  while ((c = getopt (argc, argv, "t:jk:l:m:n:o:p:q:c:v")) != -1)   {
     
     switch (c) {
     case 't' : 
@@ -397,7 +188,22 @@ int main(int argc, char ** argv)
     case 'n' : 
       // param2
       args[3]=optarg;
-      if (argcount < 4) argcount=5;
+      if (argcount < 5) argcount=5;
+      break;     
+
+    case 'o' : 
+      args[4]=optarg;
+      if (argcount < 6) argcount=6;
+      break;     
+
+    case 'p' : 
+      args[5]=optarg;
+      if (argcount < 7) argcount=7;
+      break;     
+
+    case 'q' : 
+      args[6]=optarg;
+      if (argcount < 8) argcount=8;
       break;     
 
     case 'v' : 
@@ -408,40 +214,37 @@ int main(int argc, char ** argv)
     }
   }
   printf ("\targcount: %d,\n",argcount); //json attribute
-  for (i=0; i < 4;i++)    {
+  for (i=0; i < MAXARGS-1;i++)    {
     printf ("inargv%d:\"%s\",\n ",i,args[i]);
     }
+
+  char FNAME[25];
+  char FNAMEV[25];
+  sprintf(FNAME,"ORDERANY%d",argcount);
+  sprintf(FNAMEV,"VALUEANY%d",argcount-1);
 
   // now call the function
     switch (argcount) {
     case 1:
-      gtmci_orderany1(tablename , limitcount);  
-      break;      
     case 2:
-      //gtmci_orderany2(tablename , args[0], limitcount);  
-      gtmci_any_2("ORDERANY2", tablename, limitcount, args[0],args[1]);
-      break;      
-
     case 3:
-      gtmci_any_3("ORDERANY3", tablename, limitcount, args[0],args[1],args[2]);
-      break;      
-
     case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
       if (value)
 	{
-	  gtmci_any_4("VALUEANY4", tablename, 1, args[0],args[1],args[2],args[3]);
+	  gtmci_any(FNAMEV, tablename, 1, argcount-1, args); // for the value, we need all params to be filled in
 	}
       else
 	{
-	  gtmci_any_4("ORDERANY4", tablename, limitcount, args[0],args[1],args[2],args[3]);
+	  gtmci_any(FNAME, tablename, limitcount, argcount, args);// for the order we need to leave the last param empty
 	}
       break;      
-    
-
+    default :
+      printf("Unknown args\n");
     }
-
-
-
   gtm_exit();
   printf ("}}\n"); // json
 
