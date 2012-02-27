@@ -150,27 +150,27 @@ int 	gtmci_orderany2( gtm_char_t * tablename, gtm_char_t * firstparam)
 int 	gtmci_any_2(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2 )
 {
   char * argv[] = { argv1, argv2 };
-  printf ("argv%d:\"%s\" %s,\n ",0,argv[0],argv1);
-  printf ("argv%d:\"%s\" %s,\n ",1,argv[1],argv2);
+  //  printf ("argv%d:\"%s\" %s,\n ",0,argv[0],argv1);
+  //  printf ("argv%d:\"%s\" %s,\n ",1,argv[1],argv2);
   return gtmci_any(routine, tablename, limitcount, 2, argv );
 }
 
 int 	gtmci_any_3(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2, char * argv3 )
 {
   char * argv[] = { argv1, argv2, argv3 };
-  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
-  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
-  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
+  //  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
+  //  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
+  //  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
   return gtmci_any(routine, tablename, limitcount, 3, argv );
 }
 
 int 	gtmci_any_4(const char * routine, gtm_char_t * tablename, int limitcount, char * argv1, char * argv2, char * argv3 , char * argv4)
 {
   char * argv[] = { argv1, argv2, argv3, argv4 };
-  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
-  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
-  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
-  printf ("argv%d:\"%s\" 2argv4 %s,\n ",3,argv[3],argv4);
+  //  printf ("argv%d:\"%s\", 2argv1:%s,\n ",0,argv[0],argv1);
+  //  printf ("argv%d:\"%s\" 2argv2 %s,\n ",1,argv[1],argv2);
+  //  printf ("argv%d:\"%s\" 2argv3 %s,\n ",2,argv[2],argv3);
+  //  printf ("argv%d:\"%s\" 2argv4 %s,\n ",3,argv[3],argv4);
   return gtmci_any(routine, tablename, limitcount, 4, argv );
 }
 
@@ -210,7 +210,7 @@ int 	gtmci_any(const char * routine, gtm_char_t * tablename, int limitcount, int
   int i;
   for (i =0; i < argc; i++) {
     strcpy(value[i],argv[i]); // we want to pass our own value int
-    printf ("argv%d:\"%s\",\n ",i,argv[i]);
+    //printf ("argv%d:\"%s\",\n ",i,argv[i]);
 
   } 
 
@@ -225,25 +225,25 @@ int 	gtmci_any(const char * routine, gtm_char_t * tablename, int limitcount, int
       status = gtm_ci (routine,&retval,tablename, value[0]);
 	break;
     case 2 :
-      printf ("value%d:\"%s\",\n ",0,value[0]);
-      printf ("value%d:\"%s\",\n ",1,value[1]);
+      // printf ("value%d:\"%s\",\n ",0,value[0]);
+      //printf ("value%d:\"%s\",\n ",1,value[1]);
       status = gtm_ci (routine,&retval,tablename, value[0],value[1]);
       break;
       
 	// case 3:
     case 3 :
-      printf ("value%d:\"%s\",\n ",0,value[0]);
-      printf ("value%d:\"%s\",\n ",1,value[1]);
-      printf ("value%d:\"%s\",\n ",1,value[2]);
+      //printf ("value%d:\"%s\",\n ",0,value[0]);
+      // printf ("value%d:\"%s\",\n ",1,value[1]);
+      //printf ("value%d:\"%s\",\n ",1,value[2]);
       status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2]);
       break;
 
 	// case 4
     case 4 :
-      printf ("value%d:\"%s\",\n ",0,value[0]);
-      printf ("value%d:\"%s\",\n ",1,value[1]);
-      printf ("value%d:\"%s\",\n ",1,value[2]);
-      printf ("value%d:\"%s\",\n ",3,value[3]);
+      //      printf ("value%d:\"%s\",\n ",0,value[0]);
+      // printf ("value%d:\"%s\",\n ",1,value[1]);
+      // printf ("value%d:\"%s\",\n ",1,value[2]);
+      // printf ("value%d:\"%s\",\n ",3,value[3]);
       status = gtm_ci (routine,&retval,tablename, value[0],value[1],value[2],value[3]);
       break;
 
@@ -409,7 +409,7 @@ int main(int argc, char ** argv)
   }
   printf ("\targcount: %d,\n",argcount); //json attribute
   for (i=0; i < 4;i++)    {
-    printf ("iargv%d:\"%s\",\n ",i,args[i]);
+    printf ("inargv%d:\"%s\",\n ",i,args[i]);
     }
 
   // now call the function
